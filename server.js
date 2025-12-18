@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Твой ключ deepseek.ai
-const DEEPSEEK_KEY = "const DEEPSEEK_KEY = process.env.DEEPSEEK_KEY"; //
+const DEEPSEEK_KEY = process.env.DEEPSEEK_KEY; //
 app.post('/api/chat', async (req, res) => {
     try {
         const response = await axios.post(
@@ -40,6 +40,7 @@ app.listen(PORT, () => {
 app.get('/', (req, res) => {
     res.send('Сервер работает!');
 });
+
 
 
 
