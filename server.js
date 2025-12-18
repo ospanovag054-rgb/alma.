@@ -4,7 +4,7 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Разрешаем запросы с любого фронтенда (для разработки)
 app.use(cors());
@@ -40,4 +40,5 @@ app.listen(PORT, () => {
 app.get('/', (req, res) => {
     res.send('Сервер работает!');
 });
+
 
