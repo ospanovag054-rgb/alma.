@@ -386,7 +386,7 @@
         /*************** ALMA / DEEPSEEK INTEGRATION ***************/
         // -- Важно: хранить ключ в frontend небезопасно. Рекомендуется проксировать запросы через backend.
         // -- По вашей просьбе ключ вставлен прямо в код. Заменяйте только если понимаете риски.
-        const DEEPSEEK_KEY = "sk-dc673cd7cee441f6927eae40ae6187d4"; // <- ваш дипсик API-ключ
+        const DEEPSEEK_KEY = process.env.DEEPSEEK_KEY
         // По умолчанию - гипотетический endpoint; если у вашего DeepSeek другой endpoint, замените переменную ниже:
         const DEEPSEEK_ENDPOINT = "https://alma-1.onrender.com/api/chat";
 
