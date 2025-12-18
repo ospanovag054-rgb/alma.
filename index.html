@@ -27,15 +27,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background-color: #0f172a; color: var(--text-main); overflow-x: hidden; min-height: 100vh; }
 
+        /* --- VIDEO BACKGROUND --- */
         .video-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .video-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; filter: contrast(1.1) saturate(1.1); }
         .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(15,23,42,0.2) 0%, rgba(15,23,42,0.95) 90%); }
 
-        .container { max-width: 1600px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+        /* Ensure background does NOT capture clicks (important fix) */
+        .video-wrapper,
+        .video-bg,
+        .video-overlay {
+            pointer-events: none;
+        }
+
+        .container { max-width: 1600px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 20; }
         .glass-panel { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--card-radius); box-shadow: 0 8px 32px rgba(0,0,0,0.3); transition: transform 0.3s, box-shadow 0.3s; }
         .glass-panel:hover { border-color: rgba(59,130,246,0.3); box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
 
-        header { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; }
+        header { padding: 3rem 0; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 21; }
         .brand h1 { font-size: 3rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(59,130,246,0.3); }
         .brand p { color: var(--text-muted); font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; }
 
@@ -52,11 +60,11 @@
         .alma-container { position: sticky; top: 2rem; }
         .alma-avatar { overflow: hidden; padding: 0; position: relative; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 0 30px rgba(59, 130, 246, 0.15); }
         .alma-video-wrapper { width: 100%; aspect-ratio: 9/16; position: relative; }
-        .alma-video { width: 100%; height: 100%; object-fit: cover; }
+        .alma-video { width: 100%; height: 100%; object-fit: cover; pointer-events: auto; } /* allow interacting with video inside avatar if needed */
         .alma-info { padding: 1.5rem; text-align: center; background: linear-gradient(to top, rgba(13,20,35,0.95), transparent); position: absolute; bottom: 0; left: 0; width: 100%; }
         .alma-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--primary); color: white; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; box-shadow: 0 0 10px var(--primary-glow); }
 
-        .nav-pills { display: inline-flex; background: rgba(0,0,0,0.4); padding: 5px; border-radius: 60px; margin-bottom: 2rem; border: 1px solid var(--glass-border); }
+        .nav-pills { display: inline-flex; background: rgba(0,0,0,0.4); padding: 5px; border-radius: 60px; margin-bottom: 2rem; border: 1px solid var(--glass-border); position: relative; z-index: 21; }
         .nav-item { padding: 12px 30px; border-radius: 50px; color: var(--text-muted); border: none; background: transparent; cursor: pointer; font-weight: 600; transition: 0.3s; display: flex; gap: 8px; align-items: center; font-size: 1rem; }
         .nav-item:hover { color: white; background: rgba(255,255,255,0.05); }
         .nav-item.active { background: var(--primary); color: white; box-shadow: 0 4px 15px var(--primary-glow); }
@@ -87,11 +95,11 @@
 
         #map { width: 100%; height: 500px; border-radius: 16px; z-index: 1; }
 
-        .chat-widget { position: fixed; bottom: 30px; right: 30px; width: 400px; height: 600px; display: flex; flex-direction: column; z-index: 100; transform: translateY(120%); transition: transform 0.5s cubic-bezier(0.19,1,0.22,1); border: 1px solid rgba(59,130,246,0.4); }
+        .chat-widget { position: fixed; bottom: 30px; right: 30px; width: 400px; height: 600px; display: flex; flex-direction: column; z-index: 9999; transform: translateY(120%); transition: transform 0.5s cubic-bezier(0.19,1,0.22,1); border: 1px solid rgba(59,130,246,0.4); }
         .chat-widget.open { transform: translateY(0); }
         .chat-header { padding: 1.5rem; background: rgba(13,20,35,0.95); border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 15px; border-radius: 24px 24px 0 0; }
         .chat-avatar-small { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
-        .chat-body { flex: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .chat-body { flex: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: transparent; }
         .msg { max-width: 85%; padding: 12px 18px; border-radius: 18px; font-size: 0.95rem; line-height: 1.5; position: relative; }
         .msg.alma { background: rgba(255,255,255,0.1); color: #fff; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
         .msg.user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 4px 15px var(--primary-glow); }
@@ -101,7 +109,7 @@
         .input-group input:focus { border-color: var(--primary); background: rgba(0,0,0,0.4); }
         .send-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: var(--primary); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .send-btn:hover { transform: scale(1.1); box-shadow: 0 0 15px var(--primary-glow); }
-        .chat-toggle-btn { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--primary); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 0 30px var(--primary-glow); z-index: 101; transition: 0.4s; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; }
+        .chat-toggle-btn { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--primary); border-radius: 50%; border: none; cursor: pointer; box-shadow: 0 0 30px var(--primary-glow); z-index: 10000; transition: 0.4s; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; }
         .chat-toggle-btn:hover { transform: scale(1.1) rotate(15deg); }
 
         @media (max-width: 1024px) {
@@ -114,15 +122,15 @@
 </head>
 <body>
 
-    <div class="video-wrapper">
+    <div class="video-wrapper" aria-hidden="true">
         <video class="video-bg" autoplay muted loop playsinline>
-            <source src="WhatsApp Video 2025-12-16 at 17.41.28.mp4" type="video/mp4">
+            <source src="./WhatsApp Video 2025-12-16 at 17.41.28.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
 
     <audio id="bg-music" loop>
-        <source src="Breaking News.mp3" type="audio/mpeg">
+        <source src="./Breaking News.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -146,7 +154,7 @@
                 <div class="glass-panel alma-avatar">
                     <div class="alma-video-wrapper">
                         <video class="alma-video" autoplay muted loop playsinline>
-                            <source src="IMG_5131.MP4" type="video/mp4">
+                            <source src="./IMG_5131.MP4" type="video/mp4">
                         </video>
                         <div class="alma-info">
                             <span class="alma-badge">AI Assistant</span>
@@ -294,10 +302,10 @@
 
     <button class="chat-toggle-btn" onclick="toggleChat()"><i class="fas fa-comment"></i></button>
 
-    <div class="glass-panel chat-widget" id="chat-window">
+    <div class="glass-panel chat-widget" id="chat-window" aria-hidden="true">
         <div class="chat-header">
             <video autoplay muted loop class="chat-avatar-small">
-                <source src="IMG_5131.MP4" type="video/mp4">
+                <source src="./IMG_5131.MP4" type="video/mp4">
             </video>
             <div>
                 <h3 style="margin: 0; font-size: 1.1rem;">Алма</h3>
@@ -383,113 +391,59 @@
         let currentViewMode = 'lines';
         let currentPeriod = 'all';
 
-        /*************** ALMA / DEEPSEEK INTEGRATION ***************/
-        // -- Важно: хранить ключ в frontend небезопасно. Рекомендуется проксировать запросы через backend.
-        // -- По вашей просьбе ключ вставлен прямо в код. Заменяйте только если понимаете риски.
-        const DEEPSEEK_KEY = process.env.DEEPSEEK_KEY
-        // По умолчанию - гипотетический endpoint; если у вашего DeepSeek другой endpoint, замените переменную ниже:
+        /*************** БЕЗОПАСНЫЙ DEEPSEEK (фронтенд) ***************/
+        // Frontend не должен содержать секретов. Здесь только endpoint вашего сервера, который хранит ключ.
         const DEEPSEEK_ENDPOINT = "https://alma-1.onrender.com/api/chat";
 
-        const ALMA_KNOWLEDGE = {
-            migrationBalance: migrationBalanceData,
-            countries: countryMigrationData,
-            districts: districtMigrationData,
-            flows: migrationFlowsData,
-            context: "Алматы 2025: сальдо +5210. Лидеры: Узбекистан (+4210), Китай (+543). Районы: Карасайский (+2541)"
-        };
-
-        /**
-         * callDeepseekAI(message)
-         * Универсальная обёртка — пытается отправить чат-запрос к DeepSeek и вернуть текст ответа.
-         * Поддерживает несколько форматов ответа (OpenAI-like или custom).
-         */
-        async function callDeepSeekAI(message) {
-            if (!DEEPSEEK_KEY) {
-                return "Извини, API-ключ DeepSeek не настроен. Сальдо 2025: +5210, Узбекистан +4210.";
-            }
-
-            // Сформируем содержимое запроса: system + user. Можно настраивать модель/параметры при необходимости.
-            const systemPrompt = `Ты Алма — эксперт по миграции Алматы 2025. У тебя есть данные о миграции, используй их если нужно и отвечай коротко:
-1) Факт
-2) 📊 Данные
-3) 💡 Совет
-Данные: ${JSON.stringify(ALMA_KNOWLEDGE)}`;
-
-            // Тело запроса — предполагаемый OpenAI-like формат. Если ваш Deepseek использует другой формат,
-            // замените тело и endpoint на нужный.
-            const payload = {
-                model: "deepseek-1", // при необходимости замените
-                messages: [
-                    { role: "system", content: systemPrompt },
-                    { role: "user", content: message }
-                ],
-                max_tokens: 500,
-                temperature: 0.2
-            };
-
+        // Универсальная функция запроса к вашему бекенду (с обработкой ошибок)
+        async function callServerDeepSeek(message) {
             try {
+                const payload = {
+                    model: "deepseek-chat",
+                    messages: [
+                        { role: "system", content: "Ты — Алма, эксперт по миграции. Контекст: " + (typeof ALMA_KNOWLEDGE !== 'undefined' ? ALMA_KNOWLEDGE.context : "") },
+                        { role: "user", content: message }
+                    ]
+                };
+
                 const res = await fetch(DEEPSEEK_ENDPOINT, {
                     method: "POST",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json"
-                        // Authorization здесь УДАЛЯЕМ, он уже есть в server.js
-                    },
-                    body: JSON.stringify(payload)
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                    mode: "cors"
                 });
+
                 if (!res.ok) {
-                    // не печатаем ключ в консоль — только код и текст ошибки
-                    console.warn('DeepSeek returned not ok status', res.status);
-                    const txt = await res.text().catch(() => '');
-                    console.warn('DeepSeek raw response:', txt ? txt.slice(0, 600) : '(no body)');
-                    return "Произошла ошибка при обращении к DeepSeek — попробуйте позже. Сальдо 2025: +5210.";
+                    const txt = await res.text().catch(()=>'');
+                    throw new Error('Server error: ' + res.status + ' ' + txt);
                 }
 
                 const data = await res.json();
+                if (data?.choices?.[0]?.message?.content) return data.choices[0].message.content;
+                if (data?.choices?.[0]?.text) return data.choices[0].text;
+                if (typeof data === 'string') return data;
+                return JSON.stringify(data).slice(0,1500);
 
-                // Попытки достать текст в разных популярных форматах:
-                // 1) OpenAI-style: data.choices[0].message.content
-                // 2) legacy: data.choices[0].text
-                // 3) custom: data.output?.text или data.result?.content
-                let text = null;
-                try {
-                    if (data?.choices?.[0]?.message?.content) text = data.choices[0].message.content;
-                    else if (data?.choices?.[0]?.text) text = data.choices[0].text;
-                    else if (data?.output?.[0]?.content) text = (Array.isArray(data.output) ? data.output.map(o => o.content).join("\n") : data.output);
-                    else if (typeof data?.output === "string") text = data.output;
-                    else if (data?.result?.content) text = data.result.content;
-                } catch (e) {
-                    console.warn('Parsing DeepSeek response failed', e);
-                }
-
-                // Если текст всё ещё пуст — попробуем собрать все текстовые поля в JSON для диагностики (обрезаем длинну)
-                if (!text) {
-                    try {
-                        text = JSON.stringify(data);
-                        if (text.length > 2000) text = text.slice(0, 2000) + '...';
-                    } catch (e) {
-                        text = "DeepSeek вернул нестандартный ответ.";
-                    }
-                }
-
-                return String(text);
             } catch (err) {
-                console.error('callDeepSeekAI error', err);
-                return "Ошибка соединения с DeepSeek — использую локальный ответ: Сальдо 2025: +5210.";
+                console.error('callServerDeepSeek error', err);
+                return "Ошибка связи с сервером или некорректный ответ. Проверьте server и CORS.";
             }
         }
 
         /*************** ИНИЦИАЛИЗАЦИЯ ***************/
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('JS: DOMContentLoaded');
-            initMusic();
-            initTabs();
-            initGeneralChart();
-            initExternalSection();
-            initFlowsSection();
-            initMap();
-            initAlmaAI();
-            console.log('JS: All inits done');
+            try {
+                initMusic();
+                initTabs();
+                initGeneralChart();
+                initExternalSection();
+                initFlowsSection();
+                initMap();
+                initAlmaAI();
+                console.log('JS: All inits done');
+            } catch (e) {
+                console.error('Init error:', e);
+            }
         });
 
         /*************** MUSIC ***************/
@@ -716,40 +670,12 @@
             }
         }
 
-        /*************** CHAT / ALMA AI (DeepSeek) ***************/
+        /*************** CHAT / ALMA AI (Front calls backend) ***************/
         function toggleChat() {
-            document.getElementById('chat-window').classList.toggle('open');
-        }
-/*************** ФУНКЦИЯ СВЯЗИ С СЕРВЕРОМ ***************/
-        async function callDeepSeekAI(message) {
-            try {
-                const payload = {
-                    model: "deepseek-chat",
-                    messages: [
-                        { 
-                            role: "system", 
-                            content: "Ты — Алма, эксперт по миграции. Контекст: " + (ALMA_KNOWLEDGE ? ALMA_KNOWLEDGE.context : "") 
-                        },
-                        { role: "user", content: message }
-                    ]
-                };
-
-                // Запрос к вашему серверу, который вы запускаете через node server.js
-                const res = await fetch("https://alma-1.onrender.com/api/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!res.ok) throw new Error("Ошибка сервера: " + res.status);
-
-                const data = await res.json();
-                return data.choices[0].message.content;
-
-            } catch (err) {
-                console.error("Детальная ошибка:", err);
-                return "Ошибка связи с сервером. Убедитесь, что в терминале запущен 'node server.js'!";
-            }
+            const w = document.getElementById('chat-window');
+            w.classList.toggle('open');
+            // accessibility attribute
+            w.setAttribute('aria-hidden', !w.classList.contains('open'));
         }
 
         function initAlmaAI() {
@@ -779,22 +705,23 @@
                 box.appendChild(typing);
                 box.scrollTop = box.scrollHeight;
 
-                const reply = await callDeepSeekAI(text);
+                const reply = await callServerDeepSeek(text);
 
-                // заменить индикатор печати
                 try { box.removeChild(typing); } catch(e){}
                 addMsg(reply, 'alma');
 
                 sending = false;
             }
 
-            // приветствие
             addMsg("🌟 Сәлем! Я Алма — твой эксперт по миграции Алматы 2025 📊\n💡 Сальдо +5210! Узбекистан +4210. Спрашивай!", 'alma');
 
-            // события
             btn.addEventListener('click', sendMessage);
             inp.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
         }
+
+        /*************** GLOBAL ERROR HANDLERS (safety) ***************/
+        window.addEventListener('error', (e) => { console.error('Global error caught:', e.error || e.message); });
+        window.addEventListener('unhandledrejection', (e) => { console.error('Unhandled promise rejection:', e.reason); });
 
         /*************** дополнительные обработчики (кнопка чата) ***************/
         document.addEventListener('keydown', (e) => {
